@@ -1,12 +1,6 @@
-
 fn main() {
-    let user: (&str, u8, bool) = ("abhi", 24, true); // tuple
+    let is_admin: bool = false;
+    let n: i32 = if is_admin { 1 } else { 0 };
 
-    greet(user.0);
-   
+    println!("value of n is {n}");
 }
-
-fn greet(name: &str) {
-    println!("hello, {name}");
-}
-

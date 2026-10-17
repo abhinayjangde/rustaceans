@@ -1,29 +1,17 @@
-use axum::{Json, Router, routing::get};
-use serde_json::{Value, json};
 
-async fn home() -> Json<Value> {
-    Json(json!({
-        "home": true,
-        "status": "running..."
-    }))
+#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32
 }
 
-#[tokio::main]
-async fn main() {
-    
-    let app = Router::new()
-    .route("/", get(home))
+impl Rectangle {
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
+}
+fn main(){
+    let dim = Rectangle{width:4, height:4};
 
-    .route("/health", get(|| async { Json(json!({
-        "status": "ok",
-        "msg" : "server is running..."
-    })) 
-    
-}));
-
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:4000")
-    .await.unwrap();
-
-    println!("server is running at http://localhost;4000");
-    axum::serve(listener, app).await.unwrap();
+    println!("area of {:?} is {} ", dim, dim.area()); // borrowing (reference)
 }

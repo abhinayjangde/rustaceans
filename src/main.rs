@@ -1,17 +1,18 @@
+use axum::{Json, Router, routing::get};
+use serde_json::json;
 
-struct Person {
-    name: String,
-    age: u32,
-    is_admin: bool
-}
-fn main() {
+#[tokio::main]
+async fn main() {
     
-    let user = Person {
-        name: String::from("Abhi"),
-        age: 24,
-        is_admin: true,
-    };
+    let app = Router::new()
+    .route("/health", get(|| async { Json(json!({
+        "status": "ok",
+        "msg" : "server is running..."
+    })) 
+}));
 
-    println!("name {} age {} is_admin {}", user.name, user.age, user.is_admin);
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:4000")
+    .await.unwrap();
 
+    axum::serve(listener, app).await.unwrap();
 }

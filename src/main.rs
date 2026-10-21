@@ -1,5 +1,10 @@
+use rustdev::auth_util::models::Credentials;
+use rustdev::authenticate;
 
 fn main(){
-    let age = None;
-    println!("My age is {}", age.unwrap_or(0));
+    let cred = Credentials{
+        username: String::from("abhinayjangde"),
+        password: String::from("wahitohai"),
+    };
+    authenticate(cred);
 }

@@ -1,17 +1,18 @@
-fn divide(a: i32, b: i32) -> Result<i32, String> {
-    if b == 0 {
-        return Err(String::from("Cannot divide by zero."));
-    }
-    Ok(a/b)
-}
-fn main() {
-    let result = match divide(4,3)   {
-        Ok(num) => num,
-        Err(err) => {
-            println!("Error {err}");
-            -1
-        }
-    }; 
+use std::fs::File;
 
-    println!("result is {:?}", result);
+fn main() {
+    let open_file = File::open("hello.txt");
+
+    let file = match open_file {
+        Ok(file) => file,
+        Err(err) => match err.kind() {
+            std::io::ErrorKind::NotFound => match File::create("hello.txt") {
+                Ok(file) => file,
+                Err(err) => panic!("problem creating file. {err}")
+            },
+            _ => panic!("Something went wrong.")
+        }
+    };
+
+    println!("this is file {:?}", file);
 }

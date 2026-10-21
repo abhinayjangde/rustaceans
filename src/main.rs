@@ -1,10 +1,12 @@
-use rustdev::auth_util::models::Credentials;
-use rustdev::authenticate;
+use rustdev::math::simple::{add};
+use rand;
 
 fn main(){
-    let cred = Credentials{
-        username: String::from("abhinayjangde"),
-        password: String::from("wahitohai"),
-    };
-    authenticate(cred);
+    let a = 4;
+    let b = 2;
+
+    let num = rand::random::<u8>();
+    
+    println!("sum is {}", add(a, b));
+    println!("random number = {}",num);
 }

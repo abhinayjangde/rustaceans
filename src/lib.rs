@@ -1,14 +1,13 @@
-#![allow(dead_code, unused_variables)]
-mod database;
-pub mod auth_util;
+pub mod math {
+    pub mod simple {
+        pub fn add(a: i32, b: i32) -> i32 {
+            a + b
+        }
+    }
 
-use crate::auth_util::login;
-use database::{Status, connect_to_database};
-
-
-pub fn authenticate(cred: auth_util::models::Credentials) {
-    if let Status::Connected = connect_to_database() {
-        println!("db connected");
-        login(cred);
+    pub mod complex {
+        pub fn div(a: i32, b: i32) -> i32 {
+            a/b
+        }
     }
 }

@@ -1,3 +1,5 @@
 fn main() {
-    println!("Hello, world!");
+    let vec = vec![10];
+
+    println!("vector {:?}", vec);
 }

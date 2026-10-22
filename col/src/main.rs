@@ -43,10 +43,10 @@ fn main() {
     repost: true
    };
 
-   news_aggregator(post);
-   news_aggregator(news);
+   news_aggregator(&post);
+   news_aggregator(&news);
 }
 
-fn news_aggregator(source: impl Summary){
+fn news_aggregator(source: &impl Summary){
     println!("{}", source.summarize());
 }

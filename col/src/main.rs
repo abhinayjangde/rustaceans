@@ -1,52 +1,19 @@
+use axum::{routing::get, Router};
 
-trait Summary {
-    fn summarize(&self) -> String;
+async fn root() -> &'static str{
+    "i am running"
 }
 
-struct NewsArticle {
-    headline: String,
-    location: String,
-    author: String,
-    content: String,
+#[tokio::main]
+async fn main() {
+  let app = Router::new()
+  .route("/", get(root));
+
+  let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
+
+    println!("server is running on http://localhost:3000");
+
+    axum::serve(listener, app).await.unwrap();
 }
 
-impl Summary for NewsArticle {
-    fn summarize(&self) -> String {
-        format!("{}, by {} ({})", self.headline, self.author, self.location)
-    }
-}
 
-struct SocialPost {
-    username: String,
-    content: String,
-    reply: bool,
-    repost: bool,
-}
-
-impl Summary for SocialPost {
-    fn summarize(&self) -> String {
-        format!("{}: {}", self.username, self.content)
-    }
-}
-fn main() {
-   let news = NewsArticle{
-     author: String::from("abhinayjangde"),
-     content: String::from("PHP found RCE bug"),
-     headline: String::from("Hacked PHP"),
-     location: String::from("India")
-   };
-
-   let post = SocialPost{
-    username: String::from("abhinayjangde"),
-    content: String::from("I am learning Rust"),
-    reply: false,
-    repost: true
-   };
-
-   news_aggregator(&post);
-   news_aggregator(&news);
-}
-
-fn news_aggregator(source: &impl Summary){
-    println!("{}", source.summarize());
-}

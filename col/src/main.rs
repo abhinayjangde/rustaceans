@@ -1,16 +1,16 @@
 use tokio::time::{sleep, Duration};
 
-async fn greet1(){
-    sleep(Duration::from_secs(2)).await;
-    println!("hello, abhi 1");
-}
-async fn greet2(){
-    sleep(Duration::from_secs(2)).await;
-    println!("hello, abhi 2");
+async fn send_email(){
+    sleep(Duration::from_secs(3)).await;
+    println!("email sent");
 }
 #[tokio::main]
 async fn main(){
     println!("start");
-    tokio::join!(greet1(),greet2());
+    let is_email_sent = tokio::spawn(async {
+        send_email().await;
+    });
+    println!("doing other work");
+    is_email_sent.await.unwrap();
     println!("end");
 }

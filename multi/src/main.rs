@@ -1,12 +1,15 @@
 use std::thread;
-// use std::time::Duration;
+use std::sync::mpsc;
+
 
 fn main() {
-    let v = vec![1, 2, 3];
+   let (tx, rx) = mpsc::channel();
 
-    let handler = thread::spawn(move || {
-        println!("vector is {v:?}");
-    });
+   thread::spawn(move || {
+    let val = String::from("hey");
+    tx.send(val).unwrap();
+   });
 
-    handler.join().unwrap();
+   let received = rx.recv().unwrap();
+   println!("Got: {} ", received);
 }

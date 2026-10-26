@@ -18,6 +18,7 @@ async fn main() {
 async fn health() -> (StatusCode, Json<Value>){
     
     (StatusCode::OK, Json(json!({
-        "status":"ok"
+        "status":"Ok",
+        "msg":"I am healthy :)"
     })))
 }
